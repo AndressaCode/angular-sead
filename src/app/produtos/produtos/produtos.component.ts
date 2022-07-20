@@ -45,9 +45,14 @@ export class ProdutosComponent implements OnInit {
     console.log('Edited');
   }
 
-  onDelete() {
-    console.log('Deleted');
-  }
+  onDelete(id:number){
+    this.produtosService.delete(id)
+    .subscribe({
+    next: (v) => console.log(v),
+    error: (e) => console.log(e),
+    complete: () => this.produtos_observable = this.produtosService.list()
+    });
+    }
 
   onAdd(){
     this.router.navigate(['new'], {relativeTo: this.activatedRoute})
