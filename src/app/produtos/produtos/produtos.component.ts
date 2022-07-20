@@ -3,6 +3,7 @@ import { Produto } from './../model/produto';
 import { ProdutosService } from './../service/produtos.service';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-produtos',
@@ -10,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./produtos.component.css'],
 })
 export class ProdutosComponent implements OnInit {
+
   produtos_array: Produto[] = [];
   produtos_observable: Observable<Produto[]>;
 
@@ -17,7 +19,9 @@ export class ProdutosComponent implements OnInit {
 
   constructor(
     private produtosService: ProdutosService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
     produtosService.list().subscribe((dados) => (this.produtos_array = dados));
     this.produtos_observable = produtosService.list().pipe(
@@ -44,4 +48,9 @@ export class ProdutosComponent implements OnInit {
   onDelete() {
     console.log('Deleted');
   }
+
+  onAdd(){
+    this.router.navigate(['new'], {relativeTo: this.activatedRoute})
+  }
+
 }
